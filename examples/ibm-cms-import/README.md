@@ -14,7 +14,7 @@ Certificates can be imported in different ways. Brlow are three different ways t
 
 ```hcl
 module "import_from_file" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description
@@ -28,7 +28,7 @@ module "import_from_file" {
 ```hcl
 
 module "import_from_ssl" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
@@ -43,7 +43,7 @@ module "import_from_ssl" {
 ```hcl
 
 module "import_from_tls" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name

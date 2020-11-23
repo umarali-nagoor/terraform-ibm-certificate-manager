@@ -19,7 +19,7 @@ data "ibm_resource_group" "resource_group" {
 }
 
 module "ibm-cms-instance" {
-  source = "../../modules/ibm-cms-instance"
+  source = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-instance"
   resource_group_id = data.ibm_resource_group.resource_group.id
   service_name      = var.service_name
   region            = var.region
@@ -42,7 +42,7 @@ data "ibm_resource_instance" "cms_instance" {
 }
 
 module "import_from_file" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
@@ -67,7 +67,7 @@ data "ibm_cis" "cis_instance" {
   name = var.cis_instance_name
 }
 module "order" {
-  source                          = "../../modules/ibm-cms-order"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-order"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name

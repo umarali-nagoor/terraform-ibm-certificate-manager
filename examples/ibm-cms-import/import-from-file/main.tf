@@ -10,7 +10,7 @@ data "ibm_resource_instance" "cms_instance" {
 }
 
 module "import_from_file" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description

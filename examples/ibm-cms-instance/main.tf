@@ -8,7 +8,7 @@ data "ibm_resource_group" "resource_group" {
 }
 
 module "ibm-cms-instance" {
-  source = "../../modules/ibm-cms-instance"
+  source = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-instance"
 
   resource_group_id = data.ibm_resource_group.resource_group.id
   service_name      = var.service_name

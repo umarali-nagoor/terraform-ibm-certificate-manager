@@ -9,7 +9,7 @@ This example illustrates how to  order a certifictae into the Certificate Manage
 
 ```hcl
 module "order" {
-  source                          = "../../modules/ibm-cms-order"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-order"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description

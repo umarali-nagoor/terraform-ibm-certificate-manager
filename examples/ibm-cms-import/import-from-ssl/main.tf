@@ -32,7 +32,7 @@ data "local_file" "key" {
 }
 
 module "import_from_ssl" {
-  source                          = "../../../modules/ibm-cms-import"
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description
