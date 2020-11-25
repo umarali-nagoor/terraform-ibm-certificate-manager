@@ -65,3 +65,7 @@ variable "region" {
   type        = string
   description = "Region in which certificate has to be provisioned"
 }
+variable "resource_group_name" {
+  type = string
+  description ="Name of the resource group on which service instance is present or has to be provisioned"
+}

@@ -1,9 +1,9 @@
 # IBM Certificate Manager Terraform Module
 
 This is a collection of modules that make it easier to provision certificate Manager, Import and Order Certificates on IBM Cloud Platform:
-* [ibm-cms-instance](./modules/ibm-cms-instance)
-* [ibm-cms-import](./modules/ibm-cms-import)
-* [ibm-cms-order](./modules/ibm-cms-order)
+* [instance](./modules/instance)
+* [import](./modules/import)
+* [order](./modules/order)
 ## Compatibility
 
 This module is meant for use with Terraform 0.12.
@@ -18,8 +18,8 @@ data "ibm_resource_group" "resource_group" {
   name = var.resource_group_name
 }
 
-module "ibm-cms-instance" {
-  source = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-instance"
+module "certificate-manager_instance" {
+  source = "terraform-ibm-modules/certificate-manager/ibm//modules/instance"
   resource_group_id = data.ibm_resource_group.resource_group.id
   service_name      = var.service_name
   region            = var.region
@@ -35,14 +35,20 @@ Importing Certificate from a file:
 ```hcl
 provider "ibm" {
 }
+data "ibm_resource_group" "resource_group" {
+  name = var.resource_group_name
+}
+
 data "ibm_resource_instance" "cms_instance" {
   name     = var.service_intance_name
   location = var.region
   service  = "cloudcerts"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+}
 }
 
-module "import_from_file" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
+module "certificate-manager_import-from-file" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/import"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
@@ -57,17 +63,23 @@ Ordering Certificate
 ```hcl
 provider "ibm" {
 }
+data "ibm_resource_group" "resource_group" {
+  name = var.resource_group_name
+}
+
 data "ibm_resource_instance" "cms_instance" {
   name     = var.service_intance_name
   location = var.region
   service  = "cloudcerts"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+}
 }
 //Getting existing CIS resource
 data "ibm_cis" "cis_instance" {
   name = var.cis_instance_name
 }
-module "order" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-order"
+module "certificate-manager_order" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/order"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
@@ -81,6 +93,7 @@ module "order" {
   rekey_certificate               = var.rekey_certificate
 }
 ```
+## NOTE: If we want to make use of a particular version of module, then set the "version" argument to respective module version.
 ##  Certificate Manager Data Sources
 `List all certificates:`
 
@@ -101,6 +114,7 @@ data "ibm_certificate_manager_certificate" "certificate"{
 }
 
 ```
+
 ## Requirements
 
 ### Terraform plugins
@@ -137,11 +151,12 @@ To destroy the Database resources
 
 All optional parameters by default will be set to null in respective example's varaible.tf file. If user wants to configure any optional paramter he has overwrite the default value.
 
-## Note
+## Notes
 
 * All optional fields should be given value `null` in respective resource varaible.tf file. User can configure the same by overwriting with appropriate values.
 
 * Notification Channel is not currently supported by the latest version of provider.
+
 
 ## References
 

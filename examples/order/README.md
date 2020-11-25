@@ -1,4 +1,4 @@
-# Certificate Manager Order Module
+# Certificate Manager Order Certificate Eample
 
 This example illustrates how to  order a certifictae into the Certificate Manager service instance.
 
@@ -8,20 +8,22 @@ This example illustrates how to  order a certifictae into the Certificate Manage
 `Order Certificate`:
 
 ```hcl
-resource "ibm_certificate_manager_order" "order_certificate" {
-  certificate_manager_instance_id = var.certificate_manager_instance_id
+module "certificate-manager_order" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/order"
+  certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
-  description                     = (var.description != null ? var.description : null)
-  domains                         = var.domain_names
-  domain_validation_method        = (var.domain_validation_method != null ? var.domain_validation_method : "dns-01")
-  dns_provider_instance_crn       = var.cis_instance_crn
-  key_algorithm                   = (var.key_algorithm != null ? var.key_algorithm : null)
-  auto_renew_enabled              = (var.automatic_certificate_renewal != null ? var.automatic_certificate_renewal : false)
-  renew_certificate               = (var.renew_certificate != null ? var.renew_certificate : false)
-  rotate_keys                     = (var.rekey_certificate != null ? var.rekey_certificate : false)
+  description                     = var.description
+  domain_names                    = var.domain_names
+  domain_validation_method        = var.domain_validation_method
+  cis_instance_crn                = data.ibm_cis.cis_instance.id
+  key_algorithm                   = var.key_algorithm
+  automatic_certificate_renewal   = var.automatic_certificate_renewal
+  renew_certificate               = var.renew_certificate
+  rekey_certificate               = var.rekey_certificate
 }
 
 ```
+## NOTE: If we want to make use of a particular version of module, then set the "version" argument to respective module version.
 
 ## Notes
 
@@ -39,7 +41,8 @@ resource "ibm_certificate_manager_order" "order_certificate" {
 
 | Name                            | Description                               |Type    |Default           |Required|
 |---------------------------------|-------------------------------------------|--------|------------------------|---|
-| certificate_manager_instance_id | The Id of the CMS Instance.               |`string`| n/a                    |yes|
+| region                          | The region of the instance                |`string`| n/a                    |yes|
+| service_intance_name            | The Name of the CMS Instance.             |`string`| n/a                    |yes|
 | name                            | Name of ordering certificate.             |`string`| n/a                    |yes|
 | description                     | Description of ordering certificate       |`string`| n/a                    |no |
 | domain_names                    | Valid CIS domain                          |`string`| n/a                    |yes|
@@ -49,7 +52,6 @@ resource "ibm_certificate_manager_order" "order_certificate" {
 | auto_renew_enabled              | Should be enabled for auto renewal        |`bool`  | false                  |no |
 | renew_certificate               | Should be enabled for renewal.            |`string`| false                  |no |
 | rekey_certificate               | Should be enabled for rotating keys       |`bool`  | false                  |no |
-
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
  

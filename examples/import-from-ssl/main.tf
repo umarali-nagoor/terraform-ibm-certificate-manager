@@ -3,10 +3,15 @@
 # Copyright 2020 IBM
 ############################################################################
 
+data "ibm_resource_group" "resource_group" {
+  name = var.resource_group_name
+}
+
 data "ibm_resource_instance" "cms_instance" {
   name     = var.service_intance_name
   location = var.region
   service  = "cloudcerts"
+  resource_group_id = data.ibm_resource_group.resource_group.id
 }
 resource "null_resource" "import" {
   provisioner "local-exec" {
@@ -31,8 +36,8 @@ data "local_file" "key" {
   depends_on = [null_resource.import]
 }
 
-module "import_from_ssl" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
+module "certificate-manager_import-from-ssl" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/import"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description

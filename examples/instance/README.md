@@ -4,8 +4,8 @@ This example is used to create a certificate manager instance.
 
 ## Example Usage
 ```
-module "ibm-cms-instance" {
-  source = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-instance"
+module "certificate-manager_instance" {
+  source = "terraform-ibm-modules/certificate-manager/ibm//modules/instance"
 
   resource_group_id = data.ibm_resource_group.resource_group.id
   service_name      = var.service_name
@@ -32,17 +32,19 @@ module "ibm-cms-instance" {
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 
+## NOTE: If we want to make use of a particular version of module, then set the "version" argument to respective module version.
+
 ## Usage
 
 To run this example you need to execute:
 
 ```bash
 $ terraform init
-$ terraform plan -var-file = "input.tfvars"
-$ terraform apply -var-file = "input.tfvars"
+$ terraform plan 
+$ terraform apply
 ```
 
-Run `terraform destroy -var-file="input.tfvars"` when you don't need these resources.
+Run `terraform destroy ` when you don't need these resources.
 
  ## Note:
  All optional fields are given value `null` in varaible.tf file. User can configure the same by overwriting with appropriate values.

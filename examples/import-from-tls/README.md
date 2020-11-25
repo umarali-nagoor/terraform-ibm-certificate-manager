@@ -2,48 +2,16 @@
 
 This example illustrates how to  import a certifictae into the Certificate Manager service instance.
 
-Certificates can be imported in different ways. Brlow are three different ways to import  certifcate on to cms instance
+Certificates can be imported in different ways. Below is the example to import a certificate using tls.
 
-* [ Import From File ](./import-from-file)
-* [ Import From SSL ](./import-from-ssl)
-* [ Import From TLS ](./import-from-tls)
 
 ## Example Usage of Import Module
 
-`Import existing Certificate`:
-
-```hcl
-module "import_from_file" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
-  certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
-  name                            = var.name
-  description                     = var.description
-  certificate_file                = file(var.certificate_file)
-  priv_key_file                   = var.priv_key_file
-  intermediate_certificate_file   = var.intermediate_certificate_file
-}
-```
-
-`Create ssl certificates using null resource and Import Certificates`:
-```hcl
-
-module "import_from_ssl" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
-  region                          = var.region
-  certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
-  name                            = var.name
-  description                     = var.description
-  certificate_file                = data.local_file.cert.content
-  priv_key_file                   = data.local_file.key.content
-  intermediate_certificate_file   = var.intermediate_certificate_file
-}
-
-```
 `Create ssl certificates using tls resource and Import Certificates`:
 ```hcl
 
-module "import_from_tls" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-import"
+module "certificate-manager_import-from-tls" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/import"
   region                          = var.region
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
@@ -54,6 +22,8 @@ module "import_from_tls" {
 }
 
 ```
+## NOTE: If we want to make use of a particular version of module, then set the "version" argument to respective module version.
+
 ## Notes
 
 * Certificates generated using `tls_private_key` and `tls_self_signed_cert` [tls resources](https://registry.terraform.io/providers/hashicorp/tls/latest/docs/resources/self_signed_cert) can also be imported using `ibm_certificate_manager_import` resource.
@@ -83,11 +53,12 @@ To run this example you need to execute:
 
 ```bash
 $ terraform init
-$ terraform plan -var-file = "input.tfvars"
-$ terraform apply -var-file = "input.tfvars"
+$ terraform plan
+$ terraform apply
 ```
 
-Run `terraform destroy -var-file="input.tfvars"` when you don't need these resources.
+Run `terraform destroy"` when you don't need these resources.
 
  ## Note:
- All optional fields are given value `null` in varaible.tf file. User can configure the same by overwriting with appropriate values.
+ * All optional fields are given value `null` in varaible.tf file. User can configure the same by overwriting with appropriate values.
+ * * Necessary TLS configuration must be made before using this example.. if not it considers default values..

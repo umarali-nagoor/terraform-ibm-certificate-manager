@@ -1,4 +1,4 @@
-# Certificate Manager Order Certificate Eample
+# Certificate Manager Order Module
 
 This example illustrates how to  order a certifictae into the Certificate Manager service instance.
 
@@ -8,8 +8,8 @@ This example illustrates how to  order a certifictae into the Certificate Manage
 `Order Certificate`:
 
 ```hcl
-module "order" {
-  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/ibm-cms-order"
+module "certificate-manager_order" {
+  source                          = "terraform-ibm-modules/certificate-manager/ibm//modules/order"
   certificate_manager_instance_id = data.ibm_resource_instance.cms_instance.id
   name                            = var.name
   description                     = var.description
@@ -40,8 +40,7 @@ module "order" {
 
 | Name                            | Description                               |Type    |Default           |Required|
 |---------------------------------|-------------------------------------------|--------|------------------------|---|
-| region                          | The region of the instance                |`string`| n/a                    |yes|
-| service_intance_name            | The Name of the CMS Instance.             |`string`| n/a                    |yes|
+| certificate_manager_instance_id | The Id of the CMS Instance.               |`string`| n/a                    |yes|
 | name                            | Name of ordering certificate.             |`string`| n/a                    |yes|
 | description                     | Description of ordering certificate       |`string`| n/a                    |no |
 | domain_names                    | Valid CIS domain                          |`string`| n/a                    |yes|
@@ -51,6 +50,7 @@ module "order" {
 | auto_renew_enabled              | Should be enabled for auto renewal        |`bool`  | false                  |no |
 | renew_certificate               | Should be enabled for renewal.            |`string`| false                  |no |
 | rekey_certificate               | Should be enabled for rotating keys       |`bool`  | false                  |no |
+
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
  

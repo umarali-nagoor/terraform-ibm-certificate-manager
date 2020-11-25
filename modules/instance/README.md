@@ -4,15 +4,15 @@ This module is used to create a certificate manager instance.
 
 ## Example Usage
 ```
-resource "ibm_resource_instance" "cms_instance" {
-  name              = var.service_name
-  service           = "cloudcerts"
+module "certificate-manager_instance" {
+  source = "terraform-ibm-modules/certificate-manager/ibm//modules/instance"
+  resource_group_id = data.ibm_resource_group.resource_group.id
+  service_name      = var.service_name
+  region            = var.region
   plan              = var.plan
-  location          = var.region
-  resource_group_id = var.resource_group_id
-  tags              = (var.tags != null ? var.tags : null)
-  service_endpoints = (var.service_endpoints != null ? var.service_endpoints : null)
-  parameters        = (var.parameters != null ? var.parameters : null)
+  tags              = var.tags
+  service_endpoints = var.service_endpoints
+  parameters        = var.parameters
 }
 ```
 
