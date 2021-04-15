@@ -8,7 +8,7 @@ This is a collection of modules that make it easier to provision certificate Man
 
 This module is meant for use with Terraform 0.12.
 
-## Usage
+## Usage 
 
 Full examples are in the [examples](./examples/) folder, but basic usage is as follows:
 
